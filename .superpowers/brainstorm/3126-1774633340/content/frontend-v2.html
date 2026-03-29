@@ -1,0 +1,117 @@
+<h2>Frontend v2 — Layout Aggiornato</h2>
+<p class="subtitle">Storico professionale + overlay con pallino colorato</p>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap;">
+
+  <!-- Calls List - Professional -->
+  <div class="mockup" style="flex:2; min-width:340px;">
+    <div class="mockup-header">📋 Storico Chiamate — Versione Professionale</div>
+    <div class="mockup-body" style="font-size:0.82em; padding:0;">
+
+      <!-- Top bar -->
+      <div style="padding:12px 16px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span style="font-weight:600; font-size:1em;">Chiamate</span>
+          <span style="background:#333; color:#888; font-size:0.78em; padding:2px 8px; border-radius:10px;">24</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <div class="mock-input" style="width:200px; font-size:0.82em; padding:4px 10px;">🔍 Cerca trascrizioni...</div>
+          <div class="mock-button" style="font-size:0.82em; padding:4px 12px;">+ Nuova</div>
+        </div>
+      </div>
+
+      <!-- Filter bar -->
+      <div style="padding:8px 16px; border-bottom:1px solid #222; display:flex; gap:6px; align-items:center;">
+        <span style="color:#888; font-size:0.78em; margin-right:4px;">PROGETTO</span>
+        <span style="padding:3px 10px; background:#1e3a2f; color:#4caf82; border-radius:4px; font-size:0.78em; cursor:pointer;">Tutti</span>
+        <span style="padding:3px 10px; background:#222; color:#888; border-radius:4px; font-size:0.78em; cursor:pointer;">Project Alpha</span>
+        <span style="padding:3px 10px; background:#222; color:#888; border-radius:4px; font-size:0.78em; cursor:pointer;">Progetto Beta</span>
+        <span style="padding:3px 10px; background:#222; color:#888; border-radius:4px; font-size:0.78em; cursor:pointer;">— Senza progetto</span>
+      </div>
+
+      <!-- Table header -->
+      <div style="padding:6px 16px; display:grid; grid-template-columns:2fr 1fr 1fr 80px 80px; gap:8px; border-bottom:1px solid #222;">
+        <span style="color:#555; font-size:0.75em; text-transform:uppercase; letter-spacing:0.05em;">Chiamata</span>
+        <span style="color:#555; font-size:0.75em; text-transform:uppercase; letter-spacing:0.05em;">Progetto</span>
+        <span style="color:#555; font-size:0.75em; text-transform:uppercase; letter-spacing:0.05em;">Sorgente</span>
+        <span style="color:#555; font-size:0.75em; text-transform:uppercase; letter-spacing:0.05em;">Durata</span>
+        <span style="color:#555; font-size:0.75em; text-transform:uppercase; letter-spacing:0.05em;">Data</span>
+      </div>
+
+      <!-- Row 1 -->
+      <div style="padding:10px 16px; display:grid; grid-template-columns:2fr 1fr 1fr 80px 80px; gap:8px; align-items:center; border-bottom:1px solid #1a1a1a; cursor:pointer;" onmouseover="this.style.background='#161616'" onmouseout="this.style.background='transparent'">
+        <div>
+          <div style="font-weight:500; color:#e0e0e0; margin-bottom:2px;">Standup 27 Mar</div>
+          <div style="color:#555; font-size:0.78em;">Roadmap Q2, task assegnate a Marco e Sara...</div>
+        </div>
+        <span style="color:#4caf82; font-size:0.82em;">Project Alpha</span>
+        <span style="color:#888; font-size:0.82em;">Teams</span>
+        <span style="color:#888; font-size:0.82em;">18min</span>
+        <span style="color:#555; font-size:0.78em;">27/03/26</span>
+      </div>
+
+      <!-- Row 2 -->
+      <div style="padding:10px 16px; display:grid; grid-template-columns:2fr 1fr 1fr 80px 80px; gap:8px; align-items:center; border-bottom:1px solid #1a1a1a; cursor:pointer;" onmouseover="this.style.background='#161616'" onmouseout="this.style.background='transparent'">
+        <div>
+          <div style="font-weight:500; color:#e0e0e0; margin-bottom:2px;">Call Cliente Rossi</div>
+          <div style="color:#555; font-size:0.78em;">Presentata proposta commerciale, revisione richiesta...</div>
+        </div>
+        <span style="color:#444; font-size:0.82em;">—</span>
+        <span style="color:#888; font-size:0.82em;">Chrome</span>
+        <span style="color:#888; font-size:0.82em;">45min</span>
+        <span style="color:#555; font-size:0.78em;">26/03/26</span>
+      </div>
+
+      <!-- Row 3 - processing -->
+      <div style="padding:10px 16px; display:grid; grid-template-columns:2fr 1fr 1fr 80px 80px; gap:8px; align-items:center; border-bottom:1px solid #1a1a1a; background:#161210;">
+        <div>
+          <div style="font-weight:500; color:#888; margin-bottom:2px;">Review Sprint 5</div>
+          <div style="color:#f59e0b; font-size:0.78em;">⏳ Elaborazione in corso...</div>
+        </div>
+        <span style="color:#4caf82; font-size:0.82em;">Project Alpha</span>
+        <span style="color:#888; font-size:0.82em;">Teams</span>
+        <span style="color:#888; font-size:0.82em;">1h 2min</span>
+        <span style="color:#555; font-size:0.78em;">26/03/26</span>
+      </div>
+
+      <!-- Row 4 -->
+      <div style="padding:10px 16px; display:grid; grid-template-columns:2fr 1fr 1fr 80px 80px; gap:8px; align-items:center; cursor:pointer;" onmouseover="this.style.background='#161616'" onmouseout="this.style.background='transparent'">
+        <div>
+          <div style="font-weight:500; color:#e0e0e0; margin-bottom:2px;">Allineamento Design</div>
+          <div style="color:#555; font-size:0.78em;">Decisioni su palette colori, componenti UI principali...</div>
+        </div>
+        <span style="color:#7b9cf5; font-size:0.82em;">Progetto Beta</span>
+        <span style="color:#888; font-size:0.82em;">Meet</span>
+        <span style="color:#888; font-size:0.82em;">32min</span>
+        <span style="color:#555; font-size:0.78em;">25/03/26</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="mockup" style="flex:0 0 200px;">
+    <div class="mockup-header" style="background:#1a0a0a;">🪟 Overlay</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+
+      <p style="color:#888; font-size:0.8em; margin-bottom:6px;">Minimale (angolo schermo):</p>
+      <div style="background:rgba(10,10,10,0.85); border:1px solid #333; border-radius:20px; padding:6px 14px; display:inline-flex; align-items:center; gap:8px; backdrop-filter:blur(8px);">
+        <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#22c55e; box-shadow:0 0 6px #22c55e;"></span>
+        <span style="color:#ccc; font-size:0.88em; font-family:monospace;">12:34</span>
+      </div>
+
+      <p style="color:#888; font-size:0.8em; margin:16px 0 6px;">Espanso (dopo click):</p>
+      <div style="background:rgba(10,10,10,0.90); border:1px solid #333; border-radius:12px; padding:12px 14px; min-width:170px; backdrop-filter:blur(8px);">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#22c55e; box-shadow:0 0 6px #22c55e;"></span>
+          <span style="color:#ccc; font-size:0.88em; font-family:monospace;">12:34</span>
+        </div>
+        <div style="color:#666; font-size:0.78em; margin-bottom:10px;">Microsoft Teams</div>
+        <div style="background:#1f0000; border:1px solid #3f0000; color:#f87171; font-size:0.78em; text-align:center; padding:5px; border-radius:6px; cursor:pointer;">⏹ Ferma registrazione</div>
+      </div>
+
+      <p style="color:#555; font-size:0.75em; margin-top:14px;">Il pallino diventa <span style="color:#f59e0b;">giallo</span> durante l'elaborazione, <span style="color:#555;">grigio</span> quando inattivo.</p>
+    </div>
+  </div>
+
+</div>

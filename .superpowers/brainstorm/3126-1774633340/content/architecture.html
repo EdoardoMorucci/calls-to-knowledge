@@ -1,0 +1,77 @@
+<h2>Architettura — Calls to Knowledge</h2>
+<p class="subtitle">3 processi indipendenti che comunicano tra loro</p>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px;">
+
+  <!-- Process 1 -->
+  <div class="mockup" style="flex: 1; min-width: 220px;">
+    <div class="mockup-header" style="background:#1a6b3c">🐍 Python Backend (FastAPI)</div>
+    <div class="mockup-body" style="font-size:0.85em;">
+      <p><strong>Porta: 8000</strong></p>
+      <ul>
+        <li>🎙️ Audio Monitor (WASAPI) — rileva chiamate</li>
+        <li>⏺️ Audio Recorder — cattura loopback</li>
+        <li>📝 Transcription Service — OpenAI Whisper</li>
+        <li>🤖 AI Processor — GPT-4o (summary, key points, next steps)</li>
+        <li>🗄️ Storage — SQLite via SQLAlchemy</li>
+        <li>🔌 REST API — chiamate, progetti, trascrizioni</li>
+        <li>📡 WebSocket — stato registrazione in tempo reale</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Process 2 -->
+  <div class="mockup" style="flex: 1; min-width: 220px;">
+    <div class="mockup-header" style="background:#1a3d6b">⚛️ React Frontend (Vite)</div>
+    <div class="mockup-body" style="font-size:0.85em;">
+      <p><strong>Porta: 5173 (dev) / servito da FastAPI (prod)</strong></p>
+      <ul>
+        <li>📋 Storico chiamate</li>
+        <li>🔍 Ricerca nel testo trascrizioni</li>
+        <li>📁 Gestione progetti</li>
+        <li>📊 Dashboard per progetto</li>
+        <li>📄 Dettaglio chiamata (transcript + summary)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Process 3 -->
+  <div class="mockup" style="flex: 1; min-width: 220px;">
+    <div class="mockup-header" style="background:#6b1a1a">🪟 Electron Overlay</div>
+    <div class="mockup-body" style="font-size:0.85em;">
+      <p><strong>Finestra always-on-top, trasparente</strong></p>
+      <ul>
+        <li>🔴 Badge "REC" + timer (stato minimale)</li>
+        <li>↕️ Click per espandere (nome call, stop)</li>
+        <li>📡 Connesso via WebSocket al backend</li>
+        <li>⚡ Si avvia/spegne automaticamente con la registrazione</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="mockup">
+  <div class="mockup-header">Flusso Dati — Chiamata Rilevata</div>
+  <div class="mockup-body" style="font-size:0.85em;">
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+      <div style="background:#1a6b3c;color:white;padding:6px 12px;border-radius:6px;">Windows Audio<br>Session (WASAPI)</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#2a2a2a;color:white;padding:6px 12px;border-radius:6px;">Audio Monitor<br>rileva app</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#2a2a2a;color:white;padding:6px 12px;border-radius:6px;">Avvia Recorder<br>+ WebSocket emit</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#6b1a1a;color:white;padding:6px 12px;border-radius:6px;">Overlay appare<br>"REC 00:00"</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:12px;">
+      <div style="background:#1a3a6b;color:white;padding:6px 12px;border-radius:6px;">Call finisce<br>(audio stop)</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#2a2a2a;color:white;padding:6px 12px;border-radius:6px;">Salva audio<br>WAV/MP3</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#2a2a2a;color:white;padding:6px 12px;border-radius:6px;">OpenAI Whisper<br>→ trascrizione</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#2a2a2a;color:white;padding:6px 12px;border-radius:6px;">GPT-4o<br>→ summary + punti</div>
+      <div style="font-size:1.2em;">→</div>
+      <div style="background:#1a6b3c;color:white;padding:6px 12px;border-radius:6px;">Salvato in<br>SQLite</div>
+    </div>
+  </div>
+</div>

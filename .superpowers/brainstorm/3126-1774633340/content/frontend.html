@@ -1,0 +1,132 @@
+<h2>Frontend — Schermate Principali</h2>
+<p class="subtitle">Layout delle 4 viste chiave dell'app</p>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap;">
+
+  <!-- Calls List -->
+  <div class="mockup" style="flex:1; min-width:280px;">
+    <div class="mockup-header">📋 Storico Chiamate</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <div class="mock-nav" style="font-size:0.85em;">Calls to Knowledge &nbsp;|&nbsp; <strong>Calls</strong> &nbsp;|&nbsp; Projects &nbsp;|&nbsp; Search</div>
+      <div style="margin:8px 0; display:flex; gap:6px;">
+        <div class="mock-input" style="flex:1; font-size:0.85em;">🔍 Cerca nelle trascrizioni...</div>
+        <div class="mock-button" style="font-size:0.8em;">+ Nuova</div>
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:8px; font-size:0.8em; color:#888;">
+        <span style="padding:2px 8px;background:#222;border-radius:10px;">Tutti</span>
+        <span style="padding:2px 8px;background:#333;border-radius:10px;">Project Alpha</span>
+        <span style="padding:2px 8px;background:#333;border-radius:10px;">No progetto</span>
+      </div>
+      <!-- Call item -->
+      <div style="border:1px solid #333;border-radius:6px;padding:8px;margin-bottom:6px;">
+        <div style="display:flex;justify-content:space-between;"><strong>Standup 27 Mar</strong><span style="color:#888;font-size:0.85em;">09:32 · 18min</span></div>
+        <div style="color:#4caf82;font-size:0.8em;">Project Alpha</div>
+        <div style="color:#888;font-size:0.8em;margin-top:2px;">Discusso roadmap Q2, assegnate task a Marco e Sara...</div>
+        <div style="font-size:0.75em;color:#666;margin-top:4px;">🏷 Teams · auto-rilevato</div>
+      </div>
+      <div style="border:1px solid #333;border-radius:6px;padding:8px;margin-bottom:6px;">
+        <div style="display:flex;justify-content:space-between;"><strong>Call Cliente Rossi</strong><span style="color:#888;font-size:0.85em;">ieri · 45min</span></div>
+        <div style="color:#666;font-size:0.8em;">— nessun progetto</div>
+        <div style="color:#888;font-size:0.8em;margin-top:2px;">Presentata proposta, cliente vuole revisione entro...</div>
+      </div>
+      <div style="border:1px solid #444;border-radius:6px;padding:8px;background:#1a1a1a;">
+        <div style="display:flex;justify-content:space-between;"><strong>Review Sprint 5</strong><span style="color:#f59e0b;font-size:0.8em;">⏳ processing...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call Detail -->
+  <div class="mockup" style="flex:1; min-width:280px;">
+    <div class="mockup-header">📄 Dettaglio Chiamata</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <h3 style="margin:0">Standup 27 Mar</h3>
+          <div style="color:#888;font-size:0.85em;">Teams · 27/03/2026 09:32 · 18min · Project Alpha</div>
+        </div>
+        <div class="mock-button" style="font-size:0.8em;">▶ Audio</div>
+      </div>
+      <hr style="border-color:#333;margin:8px 0;">
+      <div style="margin-bottom:10px;">
+        <div class="label">Summary</div>
+        <p style="color:#ccc;font-size:0.85em;">Standup del team per il 27 marzo. Discussa la roadmap Q2 con focus su...</p>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div class="label">Key Points</div>
+        <ul style="color:#ccc;font-size:0.85em;padding-left:16px;margin:4px 0;">
+          <li>Roadmap Q2 approvata con 3 milestone</li>
+          <li>Marco gestisce il modulo auth entro il 10 aprile</li>
+          <li>Sara inizia il redesign dashboard</li>
+        </ul>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div class="label">Next Steps</div>
+        <ul style="color:#ccc;font-size:0.85em;padding-left:16px;margin:4px 0;">
+          <li>☐ Marco: PR auth entro 10/04</li>
+          <li>☐ Sara: mockup dashboard entro 5/04</li>
+          <li>☐ Tutti: review doc requisiti</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label" style="cursor:pointer;">▶ Trascrizione completa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Dashboard -->
+  <div class="mockup" style="flex:1; min-width:280px;">
+    <div class="mockup-header">📁 Dashboard Progetto</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <h3 style="margin:0 0 4px">Project Alpha</h3>
+      <div style="color:#888;font-size:0.85em;">12 chiamate · 6h 20min totali</div>
+      <hr style="border-color:#333;margin:8px 0;">
+      <div style="display:flex;gap:12px;margin-bottom:10px;">
+        <div style="flex:1;background:#1a1a1a;border-radius:6px;padding:8px;text-align:center;">
+          <div style="font-size:1.4em;font-weight:bold;color:#4caf82">12</div>
+          <div style="font-size:0.8em;color:#888">Chiamate</div>
+        </div>
+        <div style="flex:1;background:#1a1a1a;border-radius:6px;padding:8px;text-align:center;">
+          <div style="font-size:1.4em;font-weight:bold;color:#4caf82">34</div>
+          <div style="font-size:0.8em;color:#888">Next Steps</div>
+        </div>
+        <div style="flex:1;background:#1a1a1a;border-radius:6px;padding:8px;text-align:center;">
+          <div style="font-size:1.4em;font-weight:bold;color:#4caf82">8</div>
+          <div style="font-size:0.8em;color:#888">Decisioni</div>
+        </div>
+      </div>
+      <div class="label">Tutti i Next Steps del progetto</div>
+      <ul style="color:#ccc;font-size:0.82em;padding-left:16px;margin:4px 0;">
+        <li>☐ Marco: PR auth entro 10/04 <span style="color:#666">(27/03)</span></li>
+        <li>☐ Sara: mockup dashboard <span style="color:#666">(27/03)</span></li>
+        <li>☑ Inviare proposta cliente <span style="color:#666;text-decoration:line-through">(25/03)</span></li>
+      </ul>
+      <div class="label" style="margin-top:10px;">Ultime Chiamate</div>
+      <div style="color:#ccc;font-size:0.82em;">27/03 · Standup · 18min</div>
+      <div style="color:#ccc;font-size:0.82em;">26/03 · Planning Sprint 6 · 1h 2min</div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="mockup" style="flex:0 0 180px;">
+    <div class="mockup-header" style="background:#6b1a1a;">🪟 Overlay (sempre in primo piano)</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <p style="color:#888;font-size:0.8em;margin-bottom:8px;">Stato minimale (angolo schermo):</p>
+      <div style="background:#1a0000;border:1px solid #ff4444;border-radius:8px;padding:6px 12px;display:inline-flex;align-items:center;gap:8px;">
+        <span style="color:#ff4444;font-size:0.8em;">⏺ REC</span>
+        <span style="color:#ccc;font-size:0.85em;font-family:monospace;">12:34</span>
+      </div>
+      <p style="color:#888;font-size:0.8em;margin:12px 0 4px;">Dopo click (espanso):</p>
+      <div style="background:#1a0000;border:1px solid #ff4444;border-radius:8px;padding:10px;min-width:160px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="color:#ff4444;font-size:0.8em;">⏺ REC</span>
+          <span style="color:#ccc;font-size:0.85em;font-family:monospace;">12:34</span>
+        </div>
+        <div style="color:#888;font-size:0.78em;">Microsoft Teams</div>
+        <div style="margin-top:8px;">
+          <div class="mock-button" style="font-size:0.75em;background:#500;border-color:#f00;color:#f88;text-align:center;">⏹ Stop</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

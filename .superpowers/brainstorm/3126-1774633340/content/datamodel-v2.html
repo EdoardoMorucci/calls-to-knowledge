@@ -1,0 +1,77 @@
+<h2>Modello Dati v2 — SQLite</h2>
+<p class="subtitle">Aggiornato con campi mancanti evidenziati in verde</p>
+
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+  <div class="mockup" style="flex:1; min-width:200px;">
+    <div class="mockup-header">projects</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>name</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>description</td><td style="color:#888">TEXT</td></tr>
+        <tr><td>created_at</td><td style="color:#888">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:240px;">
+    <div class="mockup-header">calls</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>project_id</td><td style="color:#888">FK → projects (nullable)</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>title</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>source_app</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>started_at</td><td style="color:#888">DATETIME</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>ended_at</td><td style="color:#888">DATETIME</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>duration_sec</td><td style="color:#888">INTEGER</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>audio_path</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>status</td><td style="color:#888">TEXT (recording/processing/done)</td></tr>
+        <tr style="border-bottom:1px solid #333; background:#0d2b1a;"><td style="color:#4caf82"><strong>+ participants</strong></td><td style="color:#4caf82">JSON array di nomi</td></tr>
+        <tr style="border-bottom:1px solid #333; background:#0d2b1a;"><td style="color:#4caf82"><strong>+ recording_trigger</strong></td><td style="color:#4caf82">TEXT (auto / manual)</td></tr>
+        <tr style="background:#0d2b1a;"><td style="color:#4caf82"><strong>+ updated_at</strong></td><td style="color:#4caf82">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:260px;">
+    <div class="mockup-header">transcripts</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>call_id</td><td style="color:#888">FK → calls</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>full_text</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>language</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333; background:#0d2b1a;"><td style="color:#4caf82"><strong>+ segments</strong></td><td style="color:#4caf82">JSON — [{start, end, text}]<br><span style="color:#666;font-size:0.85em;">da Whisper — per sync audio</span></td></tr>
+        <tr><td>created_at</td><td style="color:#888">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:240px;">
+    <div class="mockup-header">summaries</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>call_id</td><td style="color:#888">FK → calls</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>summary</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>key_points</td><td style="color:#888">JSON array</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>next_steps</td><td style="color:#888">JSON array</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>decisions</td><td style="color:#888">JSON array</td></tr>
+        <tr><td>created_at</td><td style="color:#888">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header" style="background:#0d2b1a; color:#4caf82">+ FTS Virtual Table (Full Text Search)</div>
+  <div class="mockup-body" style="font-size:0.85em;">
+    <p>SQLite richiede una virtual table separata per la ricerca full-text:</p>
+    <pre style="background:#111;padding:8px;border-radius:4px;font-size:0.9em;">CREATE VIRTUAL TABLE transcripts_fts
+  USING fts5(call_id, full_text, content=transcripts);</pre>
+    <p style="color:#888; margin-top:8px;">Popolata automaticamente via trigger INSERT/UPDATE su <code>transcripts</code>. Permette query tipo: <code>WHERE transcripts_fts MATCH 'budget Q1'</code></p>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<h2>3 Approcci Architetturali</h2>
+<p class="subtitle">Scegli l'approccio che preferisci — o di' cosa vuoi combinare</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Python Monolith + React + PyQt6 Overlay</h3>
+      <p><strong>Un solo processo Python</strong> gestisce tutto: audio monitoring, cattura, trascrizione, AI, API REST, storage. React (Vite) servito da FastAPI. Overlay = finestra PyQt6 always-on-top in thread separato.</p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pro</h4>
+          <ul>
+            <li>Meno parti mobili</li>
+            <li>Deploy semplice (un solo processo da avviare)</li>
+            <li>Overlay nativo Windows, look professionale</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Contro</h4>
+          <ul>
+            <li>PyQt6 aggiunge dipendenza pesante</li>
+            <li>Un crash blocca tutto</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:12px; font-size:0.85em; color:#888;">
+        <strong>Stack:</strong> Python · FastAPI · PyQt6 · SQLite · React/Vite
+      </p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Python Backend + React + Mini Electron Overlay ⭐ Consigliato</h3>
+      <p><strong>Python FastAPI</strong> gestisce audio, trascrizione, AI, storage. <strong>React</strong> standalone per il frontend. <strong>Mini processo Electron</strong> dedicato solo all'overlay: finestra trasparente always-on-top, riceve aggiornamenti via WebSocket dal backend.</p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pro</h4>
+          <ul>
+            <li>Overlay bellissimo e flessibile (HTML/CSS)</li>
+            <li>Se crasha l'overlay, il backend continua</li>
+            <li>Ogni componente è indipendente e riavviabile</li>
+            <li>Electron overlay è ~10MB, leggero</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Contro</h4>
+          <ul>
+            <li>3 processi da gestire all'avvio</li>
+            <li>Node.js + Python come dipendenze</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:12px; font-size:0.85em; color:#888;">
+        <strong>Stack:</strong> Python · FastAPI · SQLite · React/Vite · Electron (solo overlay) · WebSocket
+      </p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Electron Full Shell + Python Backend</h3>
+      <p><strong>Electron</strong> è il contenitore principale: lancia il backend Python come subprocess, gestisce l'overlay (BrowserWindow always-on-top), e ospita il frontend React. Pacchettizzabile come installer Windows (.exe).</p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pro</h4>
+          <ul>
+            <li>Un solo installer Windows</li>
+            <li>Esperienza app desktop completa (tray, notifiche native)</li>
+            <li>Sistema tray integrato</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Contro</h4>
+          <ul>
+            <li>Electron è pesante (~150MB baseline)</li>
+            <li>Gestione del ciclo di vita Python subprocess è complessa</li>
+            <li>Overkill se non si ha bisogno di distribuzione</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:12px; font-size:0.85em; color:#888;">
+        <strong>Stack:</strong> Electron · Python · FastAPI · SQLite · React/Vite
+      </p>
+    </div>
+  </div>
+</div>

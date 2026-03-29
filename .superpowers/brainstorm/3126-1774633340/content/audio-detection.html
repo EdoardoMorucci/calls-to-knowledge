@@ -1,0 +1,86 @@
+<h2>Rilevamento Audio — Come Funziona</h2>
+<p class="subtitle">La parte più tecnica: come il backend capisce che stai facendo una chiamata</p>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px;">
+
+  <div class="mockup" style="flex:1; min-width:300px;">
+    <div class="mockup-header">🎙️ Step 1 — Audio Monitor (WASAPI)</div>
+    <div class="mockup-body" style="font-size:0.83em;">
+      <p>Windows espone le <strong>sessioni audio attive</strong> tramite WASAPI (Windows Audio Session API). Il backend Python usa <code>pycaw</code> per monitorare queste sessioni ogni secondo.</p>
+      <p style="margin-top:8px;">Quando un'app (Teams, Chrome, Zoom, ecc.) attiva microfono o speaker, appare in questa lista con il nome del processo.</p>
+      <div style="background:#111; border-radius:6px; padding:10px; margin-top:10px; font-size:0.85em; font-family:monospace;">
+        <div style="color:#4caf82;">Sessioni attive rilevate:</div>
+        <div style="color:#888; margin-top:4px;">▸ msedge.exe — volume: 0</div>
+        <div style="color:#22c55e;">▸ Teams.exe — volume: 0.8 ← CHIAMATA!</div>
+        <div style="color:#22c55e;">▸ chrome.exe — volume: 0.6 ← CHIAMATA!</div>
+        <div style="color:#888;">▸ Spotify.exe — volume: 0.3</div>
+      </div>
+      <p style="color:#888; margin-top:8px; font-size:0.82em;">Spotify viene ignorato perché non è nella lista delle app "call apps" configurabili.</p>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:300px;">
+    <div class="mockup-header">⚙️ Step 2 — Logica di Filtraggio</div>
+    <div class="mockup-body" style="font-size:0.83em;">
+      <p>Non basta rilevare audio — serve distinguere una chiamata da musica/video. Il backend usa due criteri:</p>
+      <div style="margin-top:10px;">
+        <div style="background:#1a2a1a; border-radius:6px; padding:8px; margin-bottom:8px;">
+          <strong style="color:#4caf82;">1. Whitelist processi</strong>
+          <div style="color:#888; font-size:0.85em; margin-top:4px;">Lista configurabile: Teams.exe, chrome.exe, msedge.exe, zoom.exe, slack.exe, webex.exe...</div>
+        </div>
+        <div style="background:#1a2a1a; border-radius:6px; padding:8px; margin-bottom:8px;">
+          <strong style="color:#4caf82;">2. Durata minima</strong>
+          <div style="color:#888; font-size:0.85em; margin-top:4px;">L'audio deve durare almeno <strong>30 secondi</strong> prima che venga considerata una "chiamata". Evita falsi positivi da notifiche sonore.</div>
+        </div>
+        <div style="background:#1a1a2a; border-radius:6px; padding:8px;">
+          <strong style="color:#7b9cf5;">Override manuale sempre disponibile</strong>
+          <div style="color:#888; font-size:0.85em; margin-top:4px;">Pulsante nel frontend e shortcut da overlay per avviare/fermare manualmente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap;">
+
+  <div class="mockup" style="flex:1; min-width:300px;">
+    <div class="mockup-header">⏺️ Step 3 — Cattura Audio (Loopback)</div>
+    <div class="mockup-body" style="font-size:0.83em;">
+      <p>Una volta rilevata la chiamata, il backend cattura l'audio di sistema (tutto quello che esce dagli speaker) tramite <strong>loopback recording</strong> con <code>sounddevice</code> o <code>pyaudiowpatch</code>.</p>
+      <div style="background:#111; border-radius:6px; padding:10px; margin-top:10px; font-size:0.82em;">
+        <div style="color:#888;">Loopback = registra l'uscita audio del sistema</div>
+        <div style="color:#888; margin-top:4px;">→ Cattura sia la tua voce (mic) che gli altri partecipanti</div>
+        <div style="color:#888; margin-top:4px;">→ Salva come WAV 16kHz mono (ottimale per Whisper)</div>
+        <div style="color:#888; margin-top:4px;">→ Chunked ogni 30sec per non perdere dati in caso di crash</div>
+      </div>
+      <p style="color:#f59e0b; font-size:0.82em; margin-top:8px;">⚠️ Nota: il loopback cattura tutto l'audio del sistema. Se ascolti musica durante la call, finisce nella registrazione. Nella v2 si potrà aggiungere filtraggio per sorgente.</p>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:300px;">
+    <div class="mockup-header">📝 Step 4 — Trascrizione + AI</div>
+    <div class="mockup-body" style="font-size:0.83em;">
+      <p>Alla fine della chiamata (audio stop rilevato o stop manuale), parte il processing:</p>
+      <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+        <div style="display:flex; align-items:flex-start; gap:8px;">
+          <span style="background:#1a3a1a; color:#4caf82; padding:2px 8px; border-radius:4px; font-size:0.8em; white-space:nowrap;">1. Whisper</span>
+          <span style="color:#888; font-size:0.82em;">Trascrizione audio → testo con timestamp per segmento</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:8px;">
+          <span style="background:#1a1a3a; color:#7b9cf5; padding:2px 8px; border-radius:4px; font-size:0.8em; white-space:nowrap;">2. GPT-4o</span>
+          <span style="color:#888; font-size:0.82em;">Genera: summary, key points, next steps, decisions, titolo automatico</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:8px;">
+          <span style="background:#2a1a1a; color:#f87171; padding:2px 8px; border-radius:4px; font-size:0.8em; white-space:nowrap;">3. Storage</span>
+          <span style="color:#888; font-size:0.82em;">Salva tutto in SQLite, aggiorna FTS index, notifica frontend via WebSocket</span>
+        </div>
+      </div>
+      <div style="background:#111; border-radius:6px; padding:8px; margin-top:10px; font-size:0.82em; color:#888;">
+        <strong style="color:#ccc;">Prompt GPT-4o:</strong><br>
+        "Sei un assistente che analizza trascrizioni di riunioni. Estrai: 1) summary in 3-5 frasi, 2) key points come lista, 3) next steps con responsabile se menzionato, 4) decisioni prese, 5) titolo breve della riunione. Rispondi in JSON."
+      </div>
+    </div>
+  </div>
+
+</div>

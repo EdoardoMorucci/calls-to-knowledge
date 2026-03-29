@@ -1,0 +1,75 @@
+<h2>Modello Dati — SQLite</h2>
+<p class="subtitle">4 tabelle principali</p>
+
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+  <div class="mockup" style="flex:1; min-width:200px;">
+    <div class="mockup-header">projects</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>name</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>description</td><td style="color:#888">TEXT</td></tr>
+        <tr><td>created_at</td><td style="color:#888">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:240px;">
+    <div class="mockup-header">calls</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>project_id</td><td style="color:#888">FK → projects (nullable)</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>title</td><td style="color:#888">TEXT (auto o manuale)</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>source_app</td><td style="color:#888">TEXT (teams, chrome, ecc.)</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>started_at</td><td style="color:#888">DATETIME</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>ended_at</td><td style="color:#888">DATETIME</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>duration_sec</td><td style="color:#888">INTEGER</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>audio_path</td><td style="color:#888">TEXT (path locale)</td></tr>
+        <tr><td>status</td><td style="color:#888">TEXT (recording/processing/done)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:240px;">
+    <div class="mockup-header">transcripts</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>call_id</td><td style="color:#888">FK → calls</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>full_text</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>language</td><td style="color:#888">TEXT</td></tr>
+        <tr><td>created_at</td><td style="color:#888">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="mockup" style="flex:1; min-width:240px;">
+    <div class="mockup-header">summaries</div>
+    <div class="mockup-body" style="font-size:0.82em;">
+      <table style="width:100%; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid #333;"><td><strong>id</strong></td><td style="color:#888">INTEGER PK</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>call_id</td><td style="color:#888">FK → calls</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>summary</td><td style="color:#888">TEXT</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>key_points</td><td style="color:#888">JSON array</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>next_steps</td><td style="color:#888">JSON array</td></tr>
+        <tr style="border-bottom:1px solid #333;"><td>decisions</td><td style="color:#888">JSON array</td></tr>
+        <tr><td>created_at</td><td style="color:#888">DATETIME</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header">Note importanti</div>
+  <div class="mockup-body" style="font-size:0.85em;">
+    <ul>
+      <li><strong>project_id nullable:</strong> una chiamata può esistere senza progetto e essere assegnata dopo</li>
+      <li><strong>audio_path:</strong> il file audio viene salvato localmente (es. <code>~/calls-to-knowledge/audio/2026-03-27_teams.wav</code>)</li>
+      <li><strong>FTS (Full Text Search):</strong> SQLite supporta ricerca full-text nativa su <code>transcripts.full_text</code> — nessun servizio esterno necessario</li>
+      <li><strong>status su calls:</strong> permette di riprendere il processing se il backend viene riavviato a metà</li>
+    </ul>
+  </div>
+</div>
