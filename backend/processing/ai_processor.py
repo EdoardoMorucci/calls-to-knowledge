@@ -36,7 +36,6 @@ class AIProcessor:
                 {"role": "user", "content": f"Trascrizione:\n\n{transcript}"},
             ],
             response_format={"type": "json_object"},
-            temperature=0.3,
         )
         raw = response.choices[0].message.content
         try:

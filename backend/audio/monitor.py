@@ -45,27 +45,29 @@ class AudioMonitor:
         )
         self._consecutive_seconds = 0
         self._in_call = False
+        self._manual_override = False
         self._is_running = False
         self._thread: threading.Thread | None = None
 
     def _loop(self) -> None:
         while self._is_running:
-            app = self._session_provider()
-            if app and app.lower() in [a.lower() for a in self._config.call_apps]:
-                self._consecutive_seconds += 1
-                if (
-                    not self._in_call
-                    and self._consecutive_seconds >= self._config.min_duration_seconds
-                ):
-                    self._in_call = True
-                    logger.info("Call detected from %s", app)
-                    self._on_call_start(app)
-            else:
-                if self._in_call:
-                    logger.info("Call ended")
-                    self._in_call = False
-                    self._on_call_end()
-                self._consecutive_seconds = 0
+            if not self._manual_override:
+                app = self._session_provider()
+                if app and app.lower() in [a.lower() for a in self._config.call_apps]:
+                    self._consecutive_seconds += 1
+                    if (
+                        not self._in_call
+                        and self._consecutive_seconds >= self._config.min_duration_seconds
+                    ):
+                        self._in_call = True
+                        logger.info("Call detected from %s", app)
+                        self._on_call_start(app)
+                else:
+                    if self._in_call:
+                        logger.info("Call ended")
+                        self._in_call = False
+                        self._on_call_end()
+                    self._consecutive_seconds = 0
             time.sleep(1)
 
     def start(self) -> None:
@@ -81,12 +83,14 @@ class AudioMonitor:
     def force_start(self, app: str) -> None:
         """Override manuale: simula il rilevamento di una chiamata."""
         if not self._in_call:
+            self._manual_override = True
             self._in_call = True
             self._on_call_start(app)
 
     def force_stop(self) -> None:
         """Override manuale: simula la fine di una chiamata."""
         if self._in_call:
+            self._manual_override = False
             self._in_call = False
             self._consecutive_seconds = 0
             self._on_call_end()

@@ -61,13 +61,25 @@ class AudioRecorder:
         logger.info("Recording stopped → %s", path)
         return path
 
+    def _get_loopback_device(self, p: pyaudiowpatch.PyAudio) -> dict:
+        """Trova il device loopback WASAPI per il default output device."""
+        wasapi_info = p.get_host_api_info_by_type(pyaudiowpatch.paWASAPI)
+        default_output = p.get_device_info_by_index(wasapi_info["defaultOutputDevice"])
+        for loopback in p.get_loopback_device_info_generator():
+            if default_output["name"] in loopback["name"]:
+                return loopback
+        # fallback: primo loopback disponibile
+        for loopback in p.get_loopback_device_info_generator():
+            return loopback
+        raise RuntimeError("Nessun device loopback WASAPI trovato")
+
     def _record_loop(self, audio_path: str) -> None:
         p = pyaudiowpatch.PyAudio()
         try:
-            wasapi_info = p.get_host_api_info_by_type(pyaudiowpatch.paWASAPI)
-            speaker = p.get_device_info_by_index(wasapi_info["defaultOutputDevice"])
+            speaker = self._get_loopback_device(p)
             rate = int(speaker["defaultSampleRate"])
-            channels = max(1, speaker["maxInputChannels"])
+            channels = int(speaker["maxInputChannels"])
+            logger.info("Loopback device: %s (ch=%d, rate=%d)", speaker["name"], channels, rate)
 
             stream = p.open(
                 format=FORMAT,
