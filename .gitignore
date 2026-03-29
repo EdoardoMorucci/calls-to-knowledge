@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+config.toml
+*.wav
+*.mp3
+~/calls-to-knowledge/
+.env

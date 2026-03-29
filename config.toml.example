@@ -1,0 +1,23 @@
+[openai]
+api_key = "sk-..."
+
+[transcription]
+provider = "openai"          # "openai" | "local"
+local_model = "medium"       # usato solo se provider = "local"
+
+[ai]
+model = "gpt-5-mini"
+
+[supabase]
+url = "https://xxxx.supabase.co"
+anon_key = ""
+service_role_key = ""
+
+[recording]
+min_duration_seconds = 15
+call_apps = ["Teams.exe", "chrome.exe", "msedge.exe", "zoom.exe", "slack.exe", "webex.exe"]
+audio_dir = "~/calls-to-knowledge/audio"
+
+[server]
+host = "127.0.0.1"
+port = 8000
