@@ -1,6 +1,6 @@
 import os
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/calls", tags=["calls"])
@@ -93,6 +93,18 @@ async def export_call(call_id: int, request: Request):
         media_type="text/markdown; charset=utf-8",
         headers={"Content-Disposition": f'attachment; filename="{title_slug}.md"'},
     )
+
+
+@router.get("/{call_id}/audio")
+async def stream_audio(call_id: int, request: Request):
+    db = request.app.state.db
+    call = await db.get_call(call_id)
+    if not call:
+        raise HTTPException(status_code=404, detail="Call not found")
+    audio_path = call.get("audio_path")
+    if not audio_path or not os.path.exists(audio_path):
+        raise HTTPException(status_code=404, detail="Audio file not found")
+    return FileResponse(audio_path, media_type="audio/wav")
 
 
 @router.post("/{call_id}/reprocess", status_code=202)
