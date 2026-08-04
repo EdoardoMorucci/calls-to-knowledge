@@ -3,10 +3,10 @@ api_key = "sk-..."
 
 [transcription]
 provider = "openai"          # "openai" | "local"
-local_model = "medium"       # usato solo se provider = "local"
+local_model = "medium"       # used only when provider = "local"
 
 [ai]
-model = "gpt-5-mini"
+model = "gpt-4o-mini"
 
 [supabase]
 url = "https://xxxx.supabase.co"
